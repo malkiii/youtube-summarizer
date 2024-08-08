@@ -1,0 +1,9 @@
+{
+  "editor.formatOnSave": true,
+  "bladeFormatter.format.indentSize": 2,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.indentSize": 2,
+  "[php]": {
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+  }
+}
