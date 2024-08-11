@@ -1,5 +1,12 @@
+import type { ViteDevServer } from 'vite';
 import fs from 'node:fs/promises';
+import { getAbsolutePath } from './lib/utils';
 import express from 'express';
+import cors from 'cors';
+
+import * as trpcExpress from '@trpc/server/adapters/express';
+import { createContext } from './lib/trpc';
+import { appRouter } from './router';
 
 // Constants
 const isProduction = process.env.NODE_ENV === 'production';
@@ -7,16 +14,20 @@ const port = process.env.PORT || 5173;
 const base = process.env.BASE || '/';
 
 // Cached production assets
-const templateHtml = isProduction ? await fs.readFile('./dist/client/index.html', 'utf-8') : '';
+const templateHtml = isProduction
+  ? await fs.readFile(getAbsolutePath('./dist/client/index.html'), 'utf-8')
+  : '';
 const ssrManifest = isProduction
-  ? await fs.readFile('./dist/client/.vite/ssr-manifest.json', 'utf-8')
+  ? await fs.readFile(getAbsolutePath('./dist/client/.vite/ssr-manifest.json'), 'utf-8')
   : undefined;
 
 // Create http server
 const app = express();
 
+app.use(cors());
+
 // Add Vite or respective production middlewares
-let vite;
+let vite: ViteDevServer;
 if (!isProduction) {
   const { createServer } = await import('vite');
   vite = await createServer({
@@ -29,7 +40,7 @@ if (!isProduction) {
   const compression = (await import('compression')).default;
   const sirv = (await import('sirv')).default;
   app.use(compression());
-  app.use(base, sirv('./dist/client', { extensions: [] }));
+  app.use(base, sirv(getAbsolutePath('./dist/client'), { extensions: [] }));
 }
 
 // Serve HTML
@@ -37,16 +48,16 @@ app.use('*', async (req, res) => {
   try {
     const url = req.originalUrl.replace(base, '');
 
-    let template;
-    let render;
+    let template: string;
+    let render: any;
     if (!isProduction) {
       // Always read fresh template in development
-      template = await fs.readFile('./index.html', 'utf-8');
+      template = await fs.readFile(getAbsolutePath('./index.html'), 'utf-8');
       template = await vite.transformIndexHtml(url, template);
-      render = (await vite.ssrLoadModule('/src/entry-server.tsx')).render;
+      render = (await vite.ssrLoadModule(getAbsolutePath('./src/entry-server.tsx'))).render;
     } else {
       template = templateHtml;
-      render = (await import('./dist/server/entry-server.js')).render;
+      render = (await import(getAbsolutePath('./dist/server/entry-server.js'))).render;
     }
 
     const rendered = await render(url, ssrManifest);
@@ -62,6 +73,14 @@ app.use('*', async (req, res) => {
     res.status(500).end(e.stack);
   }
 });
+
+app.use(
+  '/trpc',
+  trpcExpress.createExpressMiddleware({
+    router: appRouter,
+    createContext,
+  }),
+);
 
 // Start http server
 app.listen(port, () => {

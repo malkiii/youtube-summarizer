@@ -10,6 +10,7 @@
     "moduleResolution": "Bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
+    "preserveSymlinks": false,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
@@ -26,6 +27,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "env.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

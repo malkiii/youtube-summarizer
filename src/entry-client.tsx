@@ -1,13 +1,15 @@
 import './index.css';
-import React from 'react';
+
+import { TRPCProvider } from './trpc';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { Router } from './router';
-// import App from './App';
+import App from './app';
 
 ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,
-  <BrowserRouter>
-    <Router />
-  </BrowserRouter>,
+  <TRPCProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </TRPCProvider>,
 );

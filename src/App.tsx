@@ -1,5 +1,19 @@
-// import { Suspense, lazy } from 'react';
+import { Routes, Route } from 'react-router-dom';
+
+import Home from './pages/home';
+import Other from './pages/other';
+import NotFound from './pages/not-found';
+
+import RootLayout from './pages/layout';
 
 export default function App() {
-  return <h1>App</h1>;
+  return (
+    <Routes>
+      <Route element={<RootLayout />}>
+        <Route index element={<Home />} />
+        <Route path="/other" element={<Other />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
+  );
 }

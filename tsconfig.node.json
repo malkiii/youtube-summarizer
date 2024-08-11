@@ -6,7 +6,8 @@
     "moduleResolution": "Bundler",
     "allowSyntheticDefaultImports": true,
     "noUncheckedIndexedAccess": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "allowJs": true
   },
   "include": ["vite.config.ts"]
 }
