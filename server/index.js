@@ -1,12 +1,9 @@
-import type { ViteDevServer } from 'vite';
 import fs from 'node:fs/promises';
-import { getAbsolutePath } from './lib/utils';
+import { getAbsolutePath, minifyHTML } from './lib/utils.js';
 import express from 'express';
 import cors from 'cors';
 
-import * as trpcExpress from '@trpc/server/adapters/express';
-import { createContext } from './lib/trpc';
-import { appRouter } from './router';
+import 'dotenv/config';
 
 // Constants
 const isProduction = process.env.NODE_ENV === 'production';
@@ -27,7 +24,7 @@ const app = express();
 app.use(cors());
 
 // Add Vite or respective production middlewares
-let vite: ViteDevServer;
+let vite;
 if (!isProduction) {
   const { createServer } = await import('vite');
   vite = await createServer({
@@ -48,8 +45,8 @@ app.use('*', async (req, res) => {
   try {
     const url = req.originalUrl.replace(base, '');
 
-    let template: string;
-    let render: any;
+    let template;
+    let render;
     if (!isProduction) {
       // Always read fresh template in development
       template = await fs.readFile(getAbsolutePath('./index.html'), 'utf-8');
@@ -66,21 +63,13 @@ app.use('*', async (req, res) => {
       .replace(`<!--app-head-->`, rendered.head ?? '')
       .replace(`<!--app-html-->`, rendered.html ?? '');
 
-    res.status(200).set({ 'Content-Type': 'text/html' }).send(html);
+    res.status(200).set({ 'Content-Type': 'text/html' }).send(minifyHTML(html));
   } catch (e) {
     vite?.ssrFixStacktrace(e);
     console.log(e.stack);
     res.status(500).end(e.stack);
   }
 });
-
-app.use(
-  '/trpc',
-  trpcExpress.createExpressMiddleware({
-    router: appRouter,
-    createContext,
-  }),
-);
 
 // Start http server
 app.listen(port, () => {

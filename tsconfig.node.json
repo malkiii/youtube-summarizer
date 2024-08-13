@@ -1,11 +1,14 @@
 {
   "compilerOptions": {
+    "strict": true,
     "composite": true,
     "skipLibCheck": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "allowSyntheticDefaultImports": true,
     "noUncheckedIndexedAccess": true,
+    "noImplicitAny": true,
+    "checkJs": true,
     "jsx": "preserve",
     "allowJs": true
   },

@@ -7,7 +7,7 @@ import { z } from 'zod';
  * @see https://vitejs.dev/config/
  */
 export default defineConfig(({ mode }) => {
-  process.env = { ...process.env, ...loadEnv(mode, process.cwd(), '') };
+  Object.assign(process.env, loadEnv(mode, process.cwd(), ''));
 
   envVariables.parse(process.env);
 
