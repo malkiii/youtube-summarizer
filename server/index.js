@@ -1,9 +1,9 @@
+import 'dotenv/config';
+
 import fs from 'node:fs/promises';
 import { getAbsolutePath, minifyHTML } from './lib/utils.js';
 import express from 'express';
 import cors from 'cors';
-
-import 'dotenv/config';
 
 // Constants
 const isProduction = process.env.NODE_ENV === 'production';
@@ -66,7 +66,6 @@ app.use('*', async (req, res) => {
     res.status(200).set({ 'Content-Type': 'text/html' }).send(minifyHTML(html));
   } catch (e) {
     vite?.ssrFixStacktrace(e);
-    console.log(e.stack);
     res.status(500).end(e.stack);
   }
 });

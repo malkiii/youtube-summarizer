@@ -2,7 +2,8 @@
 const config = {
   parser: '@typescript-eslint/parser',
   parserOptions: { project: true },
-  plugins: ['@typescript-eslint', 'react', 'react-hooks'],
+  plugins: ['@typescript-eslint', 'react', 'react-hooks', 'import'],
+  extends: ['import/recommended'],
   rules: {
     'react-hooks/exhaustive-deps': 'off',
     '@typescript-eslint/consistent-type-imports': [
@@ -19,6 +20,13 @@ const config = {
       },
     ],
     '@typescript-eslint/require-await': 'off',
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.ts', '.tsx'],
+      },
+    },
   },
 };
 

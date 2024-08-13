@@ -23,6 +23,7 @@ export default defineConfig(({ mode }) => {
 
 export const envVariables = z.object({
   PUBLIC_APP_URL: z.string().url(),
+  GEMINI_API_KEY: z.string(),
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
 });
 
