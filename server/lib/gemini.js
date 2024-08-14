@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const ai = new GoogleGenerativeAI(process.env.API_KEY);
+const ai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const model = ai.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
@@ -26,5 +26,5 @@ export async function generateContent(prompt) {
  * @returns {string}
  */
 export const getSummerizeInstruction = (lang, transcript) => `\
-Summarize this text in markdown format in "${lang}", using only the information provided in the original text:
-${transcript}`;
+Write a summary in markdown format in "${lang}" using only the information provided in this video transcript:
+"${transcript.replace(/"/g, "'")}"`;

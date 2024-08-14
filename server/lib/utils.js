@@ -9,7 +9,6 @@ export function minifyHTML(html) {
   return minify(html, {
     removeComments: true,
     collapseWhitespace: true,
-    removeAttributeQuotes: true,
     minifyCSS: true,
     minifyJS: true,
   });

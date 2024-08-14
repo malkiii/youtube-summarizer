@@ -5,6 +5,8 @@ import { getAbsolutePath, minifyHTML } from './lib/utils.js';
 import express from 'express';
 import cors from 'cors';
 
+import * as routers from './routers.js';
+
 // Constants
 const isProduction = process.env.NODE_ENV === 'production';
 const port = process.env.PORT || 5173;
@@ -19,9 +21,10 @@ const ssrManifest = isProduction
   : undefined;
 
 // Create http server
-const app = express();
+const app = express().use(cors());
 
-app.use(cors());
+// Use all the app routers
+app.use('/summerize', routers.summerizeYoutubeVideo);
 
 // Add Vite or respective production middlewares
 let vite;
