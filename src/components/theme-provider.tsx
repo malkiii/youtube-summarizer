@@ -1,6 +1,6 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
-type Theme = 'dark' | 'light' | 'system';
+type Theme = 'dark' | 'light';
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -10,19 +10,14 @@ type ThemeProviderProps = {
 
 type ThemeProviderState = {
   theme: Theme;
-  setTheme: (theme: Theme) => void;
+  toggle: () => void;
 };
 
-const initialState: ThemeProviderState = {
-  theme: 'system',
-  setTheme: () => null,
-};
-
-const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
+const ThemeProviderContext = createContext<ThemeProviderState>({ theme: 'dark' } as any);
 
 export function ThemeProvider({
   children,
-  defaultTheme = 'system',
+  defaultTheme = 'dark',
   storageKey = 'theme',
   ...props
 }: ThemeProviderProps) {
@@ -30,16 +25,23 @@ export function ThemeProvider({
     () => (localStorage.getItem(storageKey) as Theme) || defaultTheme,
   );
 
-  const value = {
-    theme,
-    setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme);
-      setTheme(theme);
-    },
+  const toggle = () => {
+    const isDark = document.documentElement.classList.contains('dark');
+    setTheme(isDark ? 'light' : 'dark');
   };
 
+  useEffect(() => {
+    const root = window.document.documentElement;
+
+    disableTransition();
+    root.classList.remove('light', 'dark');
+    root.classList.add(theme);
+
+    localStorage.setItem(storageKey, theme);
+  }, [theme]);
+
   return (
-    <ThemeProviderContext.Provider {...props} value={value}>
+    <ThemeProviderContext.Provider {...props} value={{ theme, toggle }}>
       {children}
     </ThemeProviderContext.Provider>
   );
@@ -52,3 +54,16 @@ export const useTheme = () => {
 
   return context;
 };
+
+function disableTransition() {
+  const css = document.createElement('style');
+
+  css.appendChild(
+    document.createTextNode(
+      `*,*::before,*::after{-webkit-transition:none!important;-moz-transition:none!important;-o-transition:none!important;-ms-transition:none!important;transition:none!important}`,
+    ),
+  );
+
+  document.head.appendChild(css);
+  setTimeout(() => document.head.removeChild(css), 1);
+}

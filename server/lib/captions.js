@@ -27,7 +27,9 @@ export async function getVideoTranscript(videoId, lang = 'en', retries = 0) {
     if (!captionTracks || captionTracks.length === 0) throw new Error('NO_CAPTIONS');
 
     // Find the caption track with the specified language code
-    let selectedCaptionTrack = captionTracks.find(track => track.languageCode.startsWith(lang));
+    let selectedCaptionTrack = captionTracks.find(track => {
+      return track.languageCode.startsWith(lang) || lang.startsWith(track.languageCode);
+    });
 
     // If no caption track for the specified language, default to the first one
     if (!selectedCaptionTrack) selectedCaptionTrack = captionTracks[0];

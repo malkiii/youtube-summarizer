@@ -7,6 +7,14 @@ import { z } from 'zod';
  */
 
 /** @type {Router} */
+export async function locales(req, res) {
+  const pathname = req.path === '/' ? '' : req.path;
+  const lang = req.cookies.locale ?? 'en';
+
+  return res.redirect(`/${lang}${pathname}`);
+}
+
+/** @type {Router} */
 export async function summerizeYoutubeVideo(req, res) {
   try {
     const params = z
@@ -27,15 +35,15 @@ export async function summerizeYoutubeVideo(req, res) {
   }
 }
 
-const languages = {
-  zh: 'Chinese',
-  es: 'Spanish',
-  en: 'English',
-  fr: 'French',
-  de: 'German',
-  ko: 'Korean',
-  ru: 'Russian',
+export const languages = {
   ar: 'Arabic',
+  de: 'German',
+  en: 'English',
+  es: 'Spanish',
+  fr: 'French',
   hi: 'Hindi',
   ja: 'Japanese',
+  ko: 'Korean',
+  ru: 'Russian',
+  zh: 'Chinese',
 };

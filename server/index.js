@@ -1,8 +1,9 @@
 import 'dotenv/config';
 
+import express from 'express';
 import fs from 'node:fs/promises';
 import { getAbsolutePath, minifyHTML } from './lib/utils.js';
-import express from 'express';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
 import * as routers from './routers.js';
@@ -21,7 +22,7 @@ const ssrManifest = isProduction
   : undefined;
 
 // Create http server
-const app = express().use(cors());
+const app = express().use(cors()).use(cookieParser());
 
 // Use all the app routers
 app.use('/summerize', routers.summerizeYoutubeVideo);
@@ -43,8 +44,10 @@ if (!isProduction) {
   app.use(base, sirv(getAbsolutePath('./dist/client'), { extensions: [] }));
 }
 
+const languageRoute = `/:lang(${Object.keys(routers.languages).join('|')})`;
+
 // Serve HTML
-app.use('*', async (req, res) => {
+app.use(languageRoute, async (req, res) => {
   try {
     const url = req.originalUrl.replace(base, '');
 
@@ -72,6 +75,8 @@ app.use('*', async (req, res) => {
     res.status(500).end(e.stack);
   }
 });
+
+app.use('*', routers.locales);
 
 // Start http server
 app.listen(port, () => {
