@@ -16,8 +16,8 @@
             c = d.classList;
           c.remove('light', 'dark');
           var e = localStorage.getItem('theme') ?? 'dark';
-          c.add(e);
           d.style.colorScheme = e;
+          c.add(e);
         } catch (e) {}
       })();
     </script>

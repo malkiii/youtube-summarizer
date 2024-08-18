@@ -4,5 +4,7 @@
   "home.title": "どの動画を要約しますか？",
   "home.description": "AI を活用したツールで時間を節約し、要点を把握しましょう。あらゆる YouTube 動画から最も重要な情報を抽出します。",
   "home.button": "要約する",
-  "home.input": "リンクを貼り付け"
+  "home.input": "リンクを貼り付け",
+  "summary.back": "戻る",
+  "summary.copy": "クリップボードにコピー"
 }

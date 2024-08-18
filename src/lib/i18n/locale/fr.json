@@ -4,5 +4,7 @@
   "home.title": "Quelle vidéo souhaitez-vous résumer ?",
   "home.description": "Gagnez du temps et allez directement au point avec notre outil alimenté par l'IA, conçu pour extraire les informations les plus importantes de n'importe quelle vidéo YouTube.",
   "home.button": "Résumer",
-  "home.input": "Coller le lien"
+  "home.input": "Coller le lien",
+  "summary.back": "Retour",
+  "summary.copy": "Copier"
 }

@@ -29,7 +29,7 @@ export default function Page() {
 
   return (
     <div className="pt-8 md:pt-20">
-      <div className="mb-10 text-center">
+      <div id="hero" className="mb-10 text-center">
         <h1 className="text-pretty text-5xl max-md:text-3xl">{t('home.title')}</h1>
         <p className="mx-auto mt-4 max-w-3xl text-balance text-lg text-muted-foreground max-md:text-base">
           {t('home.description')}

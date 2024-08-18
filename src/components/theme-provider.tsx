@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useState } from 'react';
 
 type Theme = 'dark' | 'light';
 
@@ -25,20 +25,19 @@ export function ThemeProvider({
     () => (localStorage.getItem(storageKey) as Theme) || defaultTheme,
   );
 
-  const toggle = () => {
-    const isDark = document.documentElement.classList.contains('dark');
-    setTheme(isDark ? 'light' : 'dark');
-  };
-
-  useEffect(() => {
+  const toggle = useCallback(() => {
     const root = window.document.documentElement;
+    const resolvedTheme = root.classList.contains('dark') ? 'light' : 'dark';
 
     disableTransition();
-    root.classList.remove('light', 'dark');
-    root.classList.add(theme);
+    root.style.colorScheme = resolvedTheme;
 
-    localStorage.setItem(storageKey, theme);
-  }, [theme]);
+    root.classList.remove('light', 'dark');
+    root.classList.add(resolvedTheme);
+
+    localStorage.setItem(storageKey, resolvedTheme);
+    setTheme(resolvedTheme);
+  }, []);
 
   return (
     <ThemeProviderContext.Provider {...props} value={{ theme, toggle }}>

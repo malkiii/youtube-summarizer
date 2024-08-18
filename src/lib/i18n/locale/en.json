@@ -4,5 +4,7 @@
   "home.title": "What video would you like to summarize?",
   "home.description": "Save time and get straight to the point with our AI-powered tool, designed to extract the most important information from any YouTube video.",
   "home.button": "Summarize",
-  "home.input": "Paste the link"
+  "home.input": "Paste the link",
+  "summary.back": "Go Back",
+  "summary.copy": "Copy to clipboard"
 }

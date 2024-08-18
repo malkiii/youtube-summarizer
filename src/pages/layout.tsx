@@ -10,11 +10,14 @@ import { LanguageSelector } from './language-selector';
 
 export default function RootLayout() {
   const location = useLocation();
+  const isHome = location.pathname.length === 3;
 
   return (
     <>
-      {location.pathname.length === 3 && <BackgroundBeams />}
-      <div className="flex min-h-dvh flex-col px-4 *:mx-auto *:w-full *:max-w-6xl">
+      {isHome && <BackgroundBeams />}
+      <div
+        className={`flex min-h-dvh flex-col px-4 *:mx-auto *:w-full ${isHome ? '*:max-w-6xl' : '*:max-w-2xl'}`}
+      >
         <Header />
         <main className="relative flex-grow">
           <Outlet />
@@ -27,7 +30,7 @@ export default function RootLayout() {
 
 function Header() {
   return (
-    <header className="flex items-center justify-between py-4">
+    <header className="flex items-center justify-between py-4 print:hidden">
       <Logo className="h-12 w-auto" />
       <div className="flex items-center gap-4">
         <LanguageSelector />
@@ -57,18 +60,14 @@ export function ThemeToggle() {
 
 function Footer() {
   return (
-    <footer className="flex justify-between gap-10 text-balance py-4 text-sm *:w-fit">
-      <div>&copy; {new Date().getFullYear()} Malki Abderrahmane</div>
-      <div>
-        Source code available on{' '}
-        <a
-          href="https://github.com/malkiii/youtube-summerizer"
-          target="_blank"
-          className="underline underline-offset-2"
-        >
-          GitHub
+    <footer className="text-balance py-4 text-center text-sm print:hidden">
+      <p suppressHydrationWarning>
+        &copy; {new Date().getFullYear()}{' '}
+        <a href="https://malki.me" target="_blank" className="underline underline-offset-4">
+          Malki Abderrahmane
         </a>
-      </div>
+        , All rights reserved.
+      </p>
     </footer>
   );
 }

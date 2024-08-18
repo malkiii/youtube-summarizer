@@ -11,7 +11,7 @@ export default function App() {
     <Routes>
       <Route path="/:lang" element={<RootLayout />}>
         <Route index element={<Home />} />
-        <Route path=":id" element={<Summary />} />
+        <Route key="summary" path=":id" element={<Summary />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

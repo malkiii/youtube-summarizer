@@ -4,5 +4,7 @@
   "home.title": "您想总结哪个视频？",
   "home.description": "使用我们的 AI 工具节省时间，直接抓住重点，从任何 YouTube 视频中提取最重要的信息。",
   "home.button": "总结",
-  "home.input": "粘贴链接"
+  "home.input": "粘贴链接",
+  "summary.back": "返回",
+  "summary.copy": "复制到剪贴板"
 }
