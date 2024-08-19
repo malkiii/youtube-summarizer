@@ -29,6 +29,7 @@
     "he": "^1.2.0",
     "i18next": "^23.13.0",
     "lucide-react": "^0.427.0",
+    "node-cache": "^5.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^15.0.1",

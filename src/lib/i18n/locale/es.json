@@ -6,5 +6,11 @@
   "home.button": "Resumir",
   "home.input": "Pega el enlace",
   "summary.back": "Volver",
-  "summary.copy": "Copiar al portapapeles"
+  "summary.copy": "Copiar al portapapeles",
+  "error.invalid_data": "¡Datos inválidos recibidos!",
+  "error.bad_request": "¡Parece que no hay datos para este video!",
+  "error.unreachable": "¡No se encontró este video!",
+  "error.no_captions": "¡No se encontraron subtítulos para este video!",
+  "error.later": "¡El servicio no está disponible actualmente, inténtalo más tarde!",
+  "error.server_error": "¡Algo salió mal!"
 }

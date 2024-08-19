@@ -6,5 +6,11 @@
   "home.button": "Zusammenfassen",
   "home.input": "Link einfügen",
   "summary.back": "Zurück",
-  "summary.copy": "In Zwischenablage kopieren"
+  "summary.copy": "In Zwischenablage kopieren",
+  "error.invalid_data": "Ungültige Daten empfangen!",
+  "error.bad_request": "Für dieses Video sind keine Daten verfügbar!",
+  "error.unreachable": "Dieses Video wurde nicht gefunden!",
+  "error.no_captions": "Für dieses Video wurden keine Untertitel gefunden!",
+  "error.later": "Der Dienst ist derzeit nicht verfügbar. Bitte versuchen Sie es später erneut!",
+  "error.server_error": "Etwas ist schief gelaufen!"
 }

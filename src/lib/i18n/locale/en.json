@@ -6,5 +6,11 @@
   "home.button": "Summarize",
   "home.input": "Paste the link",
   "summary.back": "Go Back",
-  "summary.copy": "Copy to clipboard"
+  "summary.copy": "Copy to clipboard",
+  "error.invalid_data": "Invalid data received!",
+  "error.bad_request": "It seems that there is no data for this video!",
+  "error.unreachable": "This video is not found!",
+  "error.no_captions": "No captions found for this video!",
+  "error.later": "The service is currently unavailable, try again later!",
+  "error.server_error": "Something went wrong!"
 }

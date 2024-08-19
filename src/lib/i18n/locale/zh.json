@@ -6,5 +6,11 @@
   "home.button": "总结",
   "home.input": "粘贴链接",
   "summary.back": "返回",
-  "summary.copy": "复制到剪贴板"
+  "summary.copy": "复制到剪贴板",
+  "error.invalid_data": "接收到的数据无效！",
+  "error.bad_request": "该视频似乎没有数据！",
+  "error.unreachable": "找不到该视频！",
+  "error.no_captions": "该视频没有字幕！",
+  "error.later": "服务当前不可用，请稍后重试！",
+  "error.server_error": "发生错误！"
 }

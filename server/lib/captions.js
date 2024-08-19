@@ -22,6 +22,9 @@ export async function getVideoTranscript(videoId, lang = 'en', retries = 0) {
 
     const playerResponse = JSON.parse(ytInitialPlayerResponseMatch[1]);
 
+    // Check if the video is playable or exists
+    if (playerResponse.playabilityStatus?.status !== 'OK') throw new Error('UNREACHABLE');
+
     // Get caption tracks from the JSON data
     const captionTracks = playerResponse.captions?.playerCaptionsTracklistRenderer?.captionTracks;
     if (!captionTracks || captionTracks.length === 0) throw new Error('NO_CAPTIONS');

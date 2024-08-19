@@ -6,5 +6,11 @@
   "home.button": "要約する",
   "home.input": "リンクを貼り付け",
   "summary.back": "戻る",
-  "summary.copy": "クリップボードにコピー"
+  "summary.copy": "クリップボードにコピー",
+  "error.invalid_data": "無効なデータを受信しました！",
+  "error.bad_request": "このビデオのデータが見つかりません！",
+  "error.unreachable": "このビデオが見つかりません！",
+  "error.no_captions": "このビデオの字幕が見つかりません！",
+  "error.later": "サービスは現在利用できません。しばらくしてからもう一度お試しください！",
+  "error.server_error": "エラーが発生しました！"
 }

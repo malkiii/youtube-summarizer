@@ -6,5 +6,11 @@
   "home.button": "Résumer",
   "home.input": "Coller le lien",
   "summary.back": "Retour",
-  "summary.copy": "Copier"
+  "summary.copy": "Copier",
+  "error.invalid_data": "Données invalides reçues !",
+  "error.bad_request": "Il semble qu'il n'y ait pas de données pour cette vidéo !",
+  "error.unreachable": "Cette vidéo est introuvable !",
+  "error.no_captions": "Aucun sous-titre trouvé pour cette vidéo !",
+  "error.later": "Le service est actuellement indisponible, veuillez réessayer plus tard !",
+  "error.server_error": "Une erreur s'est produite !"
 }

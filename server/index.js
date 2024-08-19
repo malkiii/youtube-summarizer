@@ -4,7 +4,7 @@ import express from 'express';
 import fs from 'node:fs/promises';
 import { getAbsolutePath, minifyHTML } from './lib/utils.js';
 import cookieParser from 'cookie-parser';
-import cors from 'cors';
+// import cors from 'cors';
 
 import * as routers from './routers.js';
 
@@ -22,10 +22,10 @@ const ssrManifest = isProduction
   : undefined;
 
 // Create http server
-const app = express().use(cors()).use(cookieParser());
+const app = express().use(cookieParser());
 
 // Use all the app routers
-app.use('/summerize', routers.summerizeYoutubeVideo);
+app.get('/summerize', routers.summerizeYoutubeVideo);
 
 // Add Vite or respective production middlewares
 let vite;

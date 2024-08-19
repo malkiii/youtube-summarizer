@@ -6,5 +6,11 @@
   "home.button": "تلخيص",
   "home.input": "ألصق الرابط هنا",
   "summary.back": "إرجاع",
-  "summary.copy": "نسخ إلى الحافظة"
+  "summary.copy": "نسخ إلى الحافظة",
+  "error.invalid_data": "بيانات غير صالحة!",
+  "error.bad_request": "لا توجد بيانات لهذا الفيديو!",
+  "error.unreachable": "لم يتم العثور على هذا الفيديو!",
+  "error.no_captions": "لا توجد ترجمة لهذا الفيديو!",
+  "error.later": "الخدمة غير متاحة حاليًا، يرجى المحاولة لاحقًا!",
+  "error.server_error": "حدث خطأ ما!"
 }

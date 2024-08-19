@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, type Variants } from 'framer-motion';
@@ -8,7 +8,7 @@ import { VideoPreview } from './video-preview';
 import { AnimatedContent } from './animated-content';
 import { Button } from '@/components/ui/button';
 
-import { ArrowLeftIcon, CopyIcon, CheckIcon } from 'lucide-react';
+import { ArrowLeftIcon, CopyIcon, CheckIcon, CircleAlertIcon } from 'lucide-react';
 
 export default function Page() {
   const params = useParams();
@@ -16,21 +16,47 @@ export default function Page() {
 
   const { content, isLoading, error } = useSummary(params.id!, i18n.language);
 
+  const errorMessage = useMemo(() => {
+    if (!error) return;
+
+    switch (error) {
+      case 'INVALID_DATA':
+        return t('error.invalid_data');
+      case 'BAD_REQUEST':
+        return t('error.bad_request');
+      case 'UNREACHABLE':
+        return t('error.unreachable');
+      case 'NO_CAPTIONS':
+        return t('error.no_captions');
+      case 'GENERATION_FAILED':
+        return t('error.later');
+      default:
+        return t('error.server_error');
+    }
+  }, [t, error]);
+
   return (
-    <div className="mx-auto mb-16 min-h-[calc(100dvh-10rem)] max-w-2xl">
+    <div className="relative mx-auto mb-16 min-h-[calc(100dvh-10rem)] max-w-2xl">
       {isLoading ? (
         <>
           <Skeleton />
           <Skeleton />
         </>
-      ) : error ? (
-        <p>{error}</p>
+      ) : errorMessage ? (
+        <div className="absolute inset-0 content-center">
+          <div className="mx-auto flex w-fit -translate-y-full items-center justify-center gap-2 text-balance text-muted-foreground max-sm:flex-col max-sm:text-center">
+            <CircleAlertIcon className="block size-7 max-sm:size-10" />
+            <p role="alert" className="max-w-lg text-xl">
+              {errorMessage}
+            </p>
+          </div>
+        </div>
       ) : (
         <div className="pt-8">
           <div className="flex items-center justify-between animate-in fade-in-0">
-            <Button asChild>
+            <Button className="gap-2" asChild>
               <Link to={`/${i18n.language}`}>
-                <ArrowLeftIcon className="mr-2 size-5 rtl:-scale-100" /> {t('summary.back')}
+                <ArrowLeftIcon className="size-5 rtl:-scale-100" /> {t('summary.back')}
               </Link>
             </Button>
             <CopyButton content={content} />
@@ -53,7 +79,7 @@ export default function Page() {
 function useSummary(videoId: string, lang = 'en') {
   const [content, setContent] = React.useState<string>();
   const [isLoading, setIsLoading] = React.useState(true);
-  const [error, setError] = React.useState();
+  const [error, setError] = React.useState<string>();
 
   React.useEffect(() => {
     if (!videoId || content) return;
