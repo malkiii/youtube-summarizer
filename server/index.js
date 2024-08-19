@@ -8,6 +8,14 @@ import cookieParser from 'cookie-parser';
 
 import * as routers from './routers.js';
 
+// Website info
+const info = {
+  title: 'YouTube Summerizer',
+  description:
+    'Save time and get straight to the point with our AI-powered tool, designed to extract the most important information from any YouTube video.',
+  og: '/og.jpg',
+};
+
 // Constants
 const isProduction = process.env.NODE_ENV === 'production';
 const port = process.env.PORT || 5173;
@@ -66,6 +74,11 @@ app.use(languageRoute, async (req, res) => {
     const rendered = await render(url, ssrManifest);
 
     const html = template
+      .replaceAll(`%LANG%`, req.params.lang)
+      .replaceAll(`%TITLE%`, info.title)
+      .replaceAll(`%DESC%`, info.description)
+      .replaceAll(`%URL%`, process.env.PUBLIC_APP_URL)
+      .replaceAll(`%OG%`, new URL(info.og, process.env.PUBLIC_APP_URL).href)
       .replace(`<!--app-head-->`, rendered.head ?? '')
       .replace(`<!--app-html-->`, rendered.html ?? '');
 

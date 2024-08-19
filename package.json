@@ -66,7 +66,8 @@
     "prettier-plugin-tailwindcss": "^0.6.6",
     "tailwindcss": "^3.4.9",
     "typescript": "^5.4.5",
-    "vite": "^5.2.10"
+    "vite": "^5.2.10",
+    "vite-plugin-sitemap": "^0.7.1"
   },
   "prettier": {
     "semi": true,

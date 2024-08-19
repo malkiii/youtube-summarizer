@@ -1,12 +1,26 @@
 <!doctype html>
-<html>
+<html lang="%LANG%">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
     <link rel="icon" href="/favicon.svg" />
     <link rel="preload" href="/fonts/local.woff2" as="font" crossorigin type="font/woff2" />
-    <title>YouTube Summarizer</title>
     <!--app-head-->
+    <title>%TITLE%</title>
+    <meta name="description" content="%DESC%" />
+    <meta name="author" content="Malki Abderrahmane" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="%TITLE%" />
+    <meta property="og:locale" content="%LANG%" />
+    <meta property="og:description" content="%DESC%" />
+    <meta property="og:url" content="%URL%" />
+    <meta property="og:image" content="%OG%" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="%TITLE%" />
+    <meta name="twitter:description" content="%DESC%" />
+    <meta name="twitter:image" content="%OG%" />
   </head>
   <body>
     <script id="theme-script">
@@ -18,7 +32,7 @@
           var e = localStorage.getItem('theme') ?? 'dark';
           d.style.colorScheme = e;
           c.add(e);
-        } catch (e) {}
+        } catch {}
       })();
     </script>
     <div id="root"><!--app-html--></div>

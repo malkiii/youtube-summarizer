@@ -1,6 +1,8 @@
 import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
+import Sitemap from 'vite-plugin-sitemap';
+import { languages as langs } from './src/lib/i18n/languages';
 import { z } from 'zod';
 
 /**
@@ -9,10 +11,20 @@ import { z } from 'zod';
 export default defineConfig(({ mode }) => {
   Object.assign(process.env, loadEnv(mode, process.cwd(), ''));
 
-  envVariables.parse(process.env);
+  const env = envVariables.parse(process.env);
+  const languages = langs.map(lang => lang.code);
 
   return {
-    plugins: [react()],
+    plugins: [
+      react(),
+      Sitemap({
+        hostname: env.PUBLIC_APP_URL,
+        i18n: { languages, strategy: 'prefix' },
+        outDir: 'dist/client',
+        exclude: ['/client'],
+        dynamicRoutes: ['/'],
+      }),
+    ],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),

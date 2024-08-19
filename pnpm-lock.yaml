@@ -163,6 +163,9 @@ devDependencies:
   vite:
     specifier: ^5.2.10
     version: 5.4.0(@types/node@20.14.15)
+  vite-plugin-sitemap:
+    specifier: ^0.7.1
+    version: 0.7.1
 
 packages:
 
@@ -5727,6 +5730,10 @@ packages:
       unist-util-stringify-position: 4.0.0
       vfile-message: 4.0.2
     dev: false
+
+  /vite-plugin-sitemap@0.7.1:
+    resolution: {integrity: sha512-4NRTkiWytLuAmcikckrLcLl9iYA20+5v6l8XshcOrzxH1WR8H0O3S6sTQYfjMrE8su/LG6Y0cTodvOdcOIxaLw==}
+    dev: true
 
   /vite@5.4.0(@types/node@20.14.15):
     resolution: {integrity: sha512-5xokfMX0PIiwCMCMb9ZJcMyh5wbBun0zUzKib+L65vAZ8GY9ePZMXxFrHbr/Kyll2+LSCY7xtERPpxkBDKngwg==}
