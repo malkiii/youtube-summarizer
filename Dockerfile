@@ -1,16 +1,18 @@
-FROM node:20-slim AS base
+FROM node:20-slim
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 
 RUN corepack enable
 
-COPY . /app
-
-WORKDIR /app
+COPY package.json pnpm-lock.yaml ./
 
 RUN pnpm install --frozen-lockfile
-RUN pnpm build
+
+COPY . /app
+WORKDIR /app
+
+RUN pnpm run build
 
 EXPOSE 5173
 
