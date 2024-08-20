@@ -9,8 +9,9 @@ COPY . /app
 WORKDIR /app
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+COPY . /app
 
-RUN pnpm run build
+RUN pnpm build
 
 EXPOSE 5173
 
