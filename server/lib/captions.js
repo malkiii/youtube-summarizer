@@ -13,7 +13,12 @@ export async function getVideoTranscript(videoId, lang = 'en', retries = 0) {
   try {
     // Fetch the video page HTML
     const videoPageUrl = `https://www.youtube.com/watch?v=${videoId}`;
-    const videoPageResponse = await axios.get(videoPageUrl);
+    const videoPageResponse = await axios.get(videoPageUrl, {
+      headers: {
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+      },
+    });
     const html = videoPageResponse.data;
 
     // Extract the JSON data from the HTML
