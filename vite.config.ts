@@ -10,6 +10,7 @@ import { env } from './env';
  * @see https://vitejs.dev/config/
  */
 export default defineConfig({
+  base: __dirname,
   plugins: [
     react(),
     Sitemap({
@@ -20,7 +21,7 @@ export default defineConfig({
       },
       exclude: ['/client'],
       dynamicRoutes: ['/'],
-      outDir: path.resolve(__dirname, './dist/client'),
+      outDir: 'dist/client',
     }),
   ],
   resolve: {
