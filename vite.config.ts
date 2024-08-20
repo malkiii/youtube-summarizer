@@ -19,9 +19,9 @@ export default defineConfig(({ mode }) => {
           languages: langs.map(lang => lang.code),
           strategy: 'prefix',
         },
-        outDir: 'dist/client',
         exclude: ['/client'],
         dynamicRoutes: ['/'],
+        outDir: path.resolve(__dirname, './dist/client'),
       }),
     ],
     resolve: {
