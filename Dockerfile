@@ -7,10 +7,13 @@ RUN corepack enable
 
 FROM base AS prod
 
-COPY . /app
-WORKDIR /app
+RUN mkdir /app
+COPY pnpm-lock.yaml /app
 
+WORKDIR /app
 RUN pnpm fetch --prod
+
+COPY . /app
 RUN pnpm run build
 
 FROM base
