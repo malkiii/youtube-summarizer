@@ -6,7 +6,7 @@ import NotFound from './pages/not-found';
 
 import RootLayout from './pages/layout';
 
-export default function App() {
+export default function Router() {
   return (
     <Routes>
       <Route path="/:lang" element={<RootLayout />}>
