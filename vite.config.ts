@@ -13,7 +13,6 @@ export default defineConfig({
   plugins: [
     react(),
     Sitemap({
-      basePath: env.NODE_ENV === 'production' ? '/app' : '/',
       hostname: env.PUBLIC_APP_URL,
       i18n: {
         languages: langs.map(lang => lang.code),
