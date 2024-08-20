@@ -5,14 +5,9 @@ ENV PATH="$PNPM_HOME:$PATH"
 
 RUN corepack enable
 
-COPY package.json pnpm-lock.yaml ./
+COPY . .
 
-RUN pnpm install --frozen-lockfile
-
-COPY . /app
-WORKDIR /app
-
-RUN pnpm run build
+RUN pnpm install --frozen-lockfile && pnpm build
 
 EXPOSE 5173
 
