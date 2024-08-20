@@ -20,7 +20,7 @@ export default defineConfig({
       },
       exclude: ['/client'],
       dynamicRoutes: ['/'],
-      outDir: path.resolve(__dirname, env.NODE_ENV === 'production' ? '..' : '.', 'dist/client'),
+      outDir: path.resolve(__dirname, 'dist/client'),
     }),
   ],
   resolve: {
