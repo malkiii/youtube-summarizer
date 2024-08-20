@@ -12,5 +12,5 @@
     "jsx": "preserve",
     "allowJs": true
   },
-  "include": ["vite.config.ts", "src/lib/i18n"]
+  "include": ["vite.config.ts", "env.ts", "src/lib/i18n"]
 }
