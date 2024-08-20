@@ -3,6 +3,8 @@ import { generateContent, getSummerizeInstruction } from './lib/gemini.js';
 import Cache from 'node-cache';
 import { z } from 'zod';
 
+import { getCaptions } from './lib/transcript.js';
+
 /**
  * @typedef {import('express').RequestHandler} Router
  */
@@ -31,15 +33,18 @@ export async function summerizeYoutubeVideo(req, res) {
     const cachedData = cache.get(params.data.videoId);
     if (cachedData) return res.status(200).end(cachedData);
 
-    const transcript = await getVideoTranscript(params.data.videoId, params.data.lang);
-    const summary = await generateContent(
-      getSummerizeInstruction(languages[params.data.lang], transcript),
-    );
+    const transcript = await getCaptions(params.data.videoId, params.data.lang);
+    return res.status(200).end(transcript.toString());
 
-    // Cache the data for 10 minutes
-    cache.set(params.data.videoId, summary, 10 * 60);
+    // const transcript = await getVideoTranscript(params.data.videoId, params.data.lang);
+    // const summary = await generateContent(
+    //   getSummerizeInstruction(languages[params.data.lang], transcript),
+    // );
 
-    return res.status(200).end(summary);
+    // // Cache the data for 10 minutes
+    // cache.set(params.data.videoId, summary, 10 * 60);
+
+    // return res.status(200).end(summary);
   } catch (error) {
     if (error.message) return res.status(400).end(error.message);
 

@@ -26,6 +26,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "framer-motion": "^11.3.28",
+    "googleapis": "^142.0.0",
     "he": "^1.2.0",
     "i18next": "^23.13.0",
     "lucide-react": "^0.427.0",
@@ -39,6 +40,7 @@
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
     "xml2js": "^0.6.2",
+    "youtube-dl-exec": "^3.0.7",
     "zod": "^3.23.8"
   },
   "devDependencies": {
