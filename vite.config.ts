@@ -10,7 +10,6 @@ import { env } from './env';
  * @see https://vitejs.dev/config/
  */
 export default defineConfig({
-  base: __dirname,
   plugins: [
     react(),
     Sitemap({
@@ -28,5 +27,8 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
+  },
+  build: {
+    outDir: env.NODE_ENV === 'production' ? 'app/dist' : 'dist',
   },
 });
