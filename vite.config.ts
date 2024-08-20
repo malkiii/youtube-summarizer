@@ -10,10 +10,10 @@ import { env } from './env';
  * @see https://vitejs.dev/config/
  */
 export default defineConfig({
-  base: env.NODE_ENV === 'production' ? '/app' : '/',
   plugins: [
     react(),
     Sitemap({
+      basePath: env.NODE_ENV === 'production' ? '/app' : '/',
       hostname: env.PUBLIC_APP_URL,
       i18n: {
         languages: langs.map(lang => lang.code),
