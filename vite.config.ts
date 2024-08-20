@@ -12,16 +12,16 @@ import { env } from './env';
 export default defineConfig({
   plugins: [
     react(),
-    // Sitemap({
-    //   hostname: env.PUBLIC_APP_URL,
-    //   i18n: {
-    //     languages: langs.map(lang => lang.code),
-    //     strategy: 'prefix',
-    //   },
-    //   exclude: ['/client'],
-    //   dynamicRoutes: ['/'],
-    //   outDir: path.resolve(__dirname, './dist/client'),
-    // }),
+    Sitemap({
+      hostname: env.PUBLIC_APP_URL,
+      i18n: {
+        languages: langs.map(lang => lang.code),
+        strategy: 'prefix',
+      },
+      exclude: ['/client'],
+      dynamicRoutes: ['/'],
+      outDir: path.resolve(__dirname, './dist/client'),
+    }),
   ],
   resolve: {
     alias: {
