@@ -11,8 +11,6 @@ COPY . /app
 WORKDIR /app
 
 RUN pnpm fetch --prod
-
-COPY . /app
 RUN pnpm run build
 
 FROM base
