@@ -16,7 +16,7 @@ export async function locales(req, res) {
 }
 
 // Initialize the cache
-const cache = new Cache({ stdTTL: 10 * 60 });
+const cache = new Cache({ stdTTL: 12 * 60 });
 
 /** @type {Router} */
 export async function summerizeYoutubeVideo(req, res) {
@@ -27,21 +27,25 @@ export async function summerizeYoutubeVideo(req, res) {
 
     if (!params.success) throw new Error('INVALID_DATA');
 
+    const { videoId, lang } = params.data;
+
     // Check if data is cached
-    const cachedData = getCachedData(params.data.videoId);
+    const cachedData = getCachedData(videoId, lang);
     if (cachedData) return res.status(cachedData.status).end(cachedData.data);
 
-    const transcript = await getVideoTranscript(params.data.videoId, params.data.lang);
-    const summary = await generateContent(
-      getSummerizeInstruction(languages[params.data.lang], transcript),
-    );
+    const transcript = await getVideoTranscript(videoId, lang);
+    const summary = await generateContent(getSummerizeInstruction(languages[lang], transcript));
 
-    // Cache the data for 10 minutes
-    cache.set(params.data.videoId, summary, 10 * 60);
+    // Cache the data for 12 minutes
+    cache.set(`${lang}/${videoId}`, summary, 12 * 60);
 
     return res.status(200).end(summary);
   } catch (error) {
-    if (error.message) {
+    if (
+      error.message &&
+      error.message !== 'INVALID_DATA' &&
+      error.message !== 'GENERATION_FAILED'
+    ) {
       const videoId = req.query.videoId;
       if (videoId) cache.set(`error/${videoId}`, error.message, 5 * 60);
 
@@ -53,8 +57,8 @@ export async function summerizeYoutubeVideo(req, res) {
   }
 }
 
-function getCachedData(key) {
-  const data = cache.get(key);
+function getCachedData(key, lang) {
+  const data = cache.get(`${lang}/${key}`);
   if (data) return { data, status: 200 };
 
   const message = cache.get(`error/${key}`);

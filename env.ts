@@ -7,6 +7,7 @@ const envSchema = z.object({
   WEB_SCRAPING_API_KEY: z.string(),
   GEMINI_API_KEY: z.string(),
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
+  PORT: z.string().default('5173'),
 });
 
 export const env = envSchema.parse(process.env);
