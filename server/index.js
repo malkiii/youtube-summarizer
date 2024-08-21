@@ -35,11 +35,8 @@ const app = express().use(cookieParser());
 // Serve static files
 app.use(
   express.static(getAbsolutePath('dist/client'), {
+    index: false,
     extensions: ['jpg', 'png', 'svg', 'woff2', 'xml', 'txt', 'json'],
-    setHeaders: (res, path) => {
-      if (path === '/sitemap.xml') res.setHeader('Content-Type', 'application/xml');
-      if (path === '/robots.txt') res.setHeader('Content-Type', 'text/plain');
-    },
   }),
 );
 
