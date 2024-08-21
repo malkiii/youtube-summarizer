@@ -12,14 +12,7 @@ export async function getVideoTranscript(videoId, lang = 'en', retries = 0) {
 
   try {
     // Fetch the video page HTML
-    const videoPageUrl = `https://www.youtube.com/watch?v=${videoId}`;
-    const videoPageResponse = await axios.get(videoPageUrl, {
-      headers: {
-        'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
-      },
-    });
-    const html = videoPageResponse.data;
+    const html = await fetchHTML(`https://www.youtube.com/watch?v=${videoId}`);
 
     // Extract the JSON data from the HTML
     const ytInitialPlayerResponseMatch = html.match(/ytInitialPlayerResponse\s*=\s*(\{.*?\});/);
@@ -65,6 +58,23 @@ export async function getVideoTranscript(videoId, lang = 'en', retries = 0) {
     }
 
     throw err;
+  }
+}
+
+/**
+ * @param {string} url - The URL to fetch
+ * @returns {Promise<string>}
+ */
+async function fetchHTML(url) {
+  try {
+    const response = await axios.get('https://api.webscrapingapi.com/v2', {
+      params: { url, api_key: process.env.WEB_SCRAPING_API_KEY },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error('GENERATION_FAILED');
   }
 }
 

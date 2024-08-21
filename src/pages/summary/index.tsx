@@ -61,15 +61,14 @@ export default function Page() {
             </Button>
             <CopyButton content={content} />
           </div>
-          {/* <AnimatedContent
+          <AnimatedContent
             key="content"
             content={content ?? ''}
             onAnimationComplete={() => {
               const preview = document.getElementById('player');
               if (preview) preview.style.display = 'block';
             }}
-          /> */}
-          <p>{content}</p>
+          />
         </div>
       )}
       <VideoPreview id={params.id!} preferredLang={i18n.language} style={{ display: 'none' }} />

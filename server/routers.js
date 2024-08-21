@@ -3,8 +3,6 @@ import { generateContent, getSummerizeInstruction } from './lib/gemini.js';
 import Cache from 'node-cache';
 import { z } from 'zod';
 
-import { getCaptions } from './lib/transcript.js';
-
 /**
  * @typedef {import('express').RequestHandler} Router
  */
@@ -30,27 +28,37 @@ export async function summerizeYoutubeVideo(req, res) {
     if (!params.success) throw new Error('INVALID_DATA');
 
     // Check if data is cached
-    const cachedData = cache.get(params.data.videoId);
-    if (cachedData) return res.status(200).end(cachedData);
+    const cachedData = getCachedData(params.data.videoId);
+    if (cachedData) return res.status(cachedData.status).end(cachedData.data);
 
-    const transcript = await getCaptions(params.data.videoId, params.data.lang);
-    return res.status(200).end(transcript.toString());
+    const transcript = await getVideoTranscript(params.data.videoId, params.data.lang);
+    const summary = await generateContent(
+      getSummerizeInstruction(languages[params.data.lang], transcript),
+    );
 
-    // const transcript = await getVideoTranscript(params.data.videoId, params.data.lang);
-    // const summary = await generateContent(
-    //   getSummerizeInstruction(languages[params.data.lang], transcript),
-    // );
+    // Cache the data for 10 minutes
+    cache.set(params.data.videoId, summary, 10 * 60);
 
-    // // Cache the data for 10 minutes
-    // cache.set(params.data.videoId, summary, 10 * 60);
-
-    // return res.status(200).end(summary);
+    return res.status(200).end(summary);
   } catch (error) {
-    if (error.message) return res.status(400).end(error.message);
+    if (error.message) {
+      const videoId = req.query.videoId;
+      if (videoId) cache.set(`error/${videoId}`, error.message, 5 * 60);
+
+      return res.status(400).end(error.message);
+    }
 
     console.error(error);
     res.status(500).end('SERVER_ERROR');
   }
+}
+
+function getCachedData(key) {
+  const data = cache.get(key);
+  if (data) return { data, status: 200 };
+
+  const message = cache.get(`error/${key}`);
+  if (message) return { data: message, status: 400 };
 }
 
 export const languages = {
