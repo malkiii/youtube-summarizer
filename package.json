@@ -2,8 +2,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "nodemon --watch server --ext ts,js,json -x node server",
-    "start": "cross-env NODE_ENV=production node server",
+    "dev": "nodemon --watch server --ext ts,js,json -x node server/index.js",
+    "start": "cross-env NODE_ENV=production node server/index.js",
     "build": "pnpm build:client && pnpm build:server",
     "build:client": "vite build --ssrManifest --outDir dist/client",
     "build:server": "vite build --ssr src/entry-server.tsx --outDir dist/server",
