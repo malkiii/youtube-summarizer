@@ -59,7 +59,7 @@ export default function Page() {
                 <ArrowLeftIcon className="size-5 rtl:-scale-100" /> {t('summary.back')}
               </Link>
             </Button>
-            <CopyButton content={content} />
+            <CopyButton content={content} link={`https://www.youtube.com/watch?v=${params.id}`} />
           </div>
           <AnimatedContent
             key="content"
@@ -115,7 +115,7 @@ function useSummary(videoId: string, lang = 'en') {
   return { content, isLoading, error };
 }
 
-function CopyButton({ content }: { content: string | undefined }) {
+function CopyButton(props: { link: string; content: string | undefined }) {
   const { t } = useTranslation();
   const [copied, setCopied] = React.useState(false);
 
@@ -128,8 +128,10 @@ function CopyButton({ content }: { content: string | undefined }) {
       title={t('summary.copy')}
       aria-label={t('summary.copy')}
       onClick={async () => {
-        if (!content) return;
-        await navigator.clipboard.writeText(markdownToText(content));
+        if (!props.content) return;
+        await navigator.clipboard.writeText(
+          markdownToText(props.content).trim() + '\n\n' + `link: ${props.link}`,
+        );
 
         setCopied(true);
         setTimeout(() => setCopied(false), 3000);
