@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { useTheme } from '@/components/theme-provider';
 import { Moon, Sun } from 'lucide-react';
 import { BackgroundBeams } from '@/components/background-beams';
+import { ScrollToTopButton } from '@/components/scroll-to-top-button';
 import { LanguageSelector } from './language-selector';
 
 export default function RootLayout() {
@@ -24,6 +25,7 @@ export default function RootLayout() {
         </main>
         <Footer />
       </div>
+      <ScrollToTopButton />
     </>
   );
 }
