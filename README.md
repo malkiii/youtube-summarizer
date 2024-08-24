@@ -2,7 +2,7 @@
 
 ## Powered By
 
-- [Railway](https://railway.app/) &horbar; a cloud platform for building and shipping web applications.
+- [Render](https://render.com/) &horbar; a cloud platform for building and shipping web applications.
 - [WebScrapingAPI ](https://www.webscrapingapi.com/) &horbar; a proxy API for web scraping.
 - [Gemini API](https://ai.google.dev/gemini-api) &horbar; the Gemini 1.5 Flash API provided by Google.
 
