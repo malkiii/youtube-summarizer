@@ -13,7 +13,11 @@ export default function RootLayout() {
 
   return (
     <div
-      style={isHome ? { background: 'linear-gradient(0deg, #ffffff05, #000)' } : undefined}
+      style={
+        isHome
+          ? { background: 'linear-gradient(0deg, hsl(var(--foreground) / 0.02), hsl(var(--card)))' }
+          : undefined
+      }
       className={`grid-collapse grid min-h-dvh grid-rows-[min-content_auto_min-content] px-2 *:mx-auto *:w-full ${isHome ? '*:max-w-6xl' : '*:max-w-2xl'}`}
     >
       <Header />

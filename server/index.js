@@ -40,6 +40,9 @@ app.use(
   }),
 );
 
+// Health check
+app.get('/status', (req, res) => res.status(200).end());
+
 // Use all the app routers
 app.get('/summerize', routers.summerizeYoutubeVideo);
 
