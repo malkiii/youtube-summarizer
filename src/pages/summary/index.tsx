@@ -4,9 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { motion, type Variants } from 'framer-motion';
 import { markdownToText } from '@/lib/utils';
 
-import { VideoPreview } from './video-preview';
-import { AnimatedContent } from './animated-content';
 import { Button } from '@/components/ui/button';
+import { ScrollToTopButton } from '@/components/scroll-to-top-button';
+import { AnimatedContent } from './animated-content';
+import { VideoPreview } from './video-preview';
 
 import { ArrowLeftIcon, CopyIcon, CheckIcon, CircleAlertIcon } from 'lucide-react';
 
@@ -36,7 +37,7 @@ export default function Page() {
   }, [t, error]);
 
   return (
-    <div className="relative mx-auto mb-16 min-h-[calc(100dvh-10rem)] max-w-2xl">
+    <div className="relative mx-auto min-h-dvh max-w-2xl px-4 py-5">
       {isLoading ? (
         <>
           <Skeleton />
@@ -52,7 +53,7 @@ export default function Page() {
           </div>
         </div>
       ) : (
-        <div className="mt-8">
+        <>
           <div className="flex items-center justify-between animate-in fade-in-0 print:hidden">
             <Button className="gap-2" asChild>
               <Link to={`/${i18n.language}`}>
@@ -69,9 +70,10 @@ export default function Page() {
               if (preview) preview.style.display = 'block';
             }}
           />
-        </div>
+        </>
       )}
       <VideoPreview id={params.id!} preferredLang={i18n.language} style={{ display: 'none' }} />
+      <ScrollToTopButton />
     </div>
   );
 }

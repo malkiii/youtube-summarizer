@@ -64,10 +64,6 @@
     scroll-padding-top: 2rem;
   }
 
-  html:has(#hero) {
-    scrollbar-gutter: stable;
-  }
-
   body {
     @apply min-h-dvh overflow-x-hidden bg-background font-sans text-foreground antialiased;
     -webkit-tap-highlight-color: transparent;
@@ -97,5 +93,11 @@
     html {
       color-scheme: light !important;
     }
+  }
+}
+
+@layer utilities {
+  .grid-collapse {
+    @apply gap-px *:ring-1 *:ring-border;
   }
 }
