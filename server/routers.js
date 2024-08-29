@@ -52,8 +52,8 @@ export async function summerizeYoutubeVideo(req, res) {
       return res.status(400).end(error.message);
     }
 
-    console.error(error);
-    res.status(500).end('SERVER_ERROR');
+    if (!error.message) console.error(error);
+    res.status(500).end(error.message ?? 'SERVER_ERROR');
   }
 }
 

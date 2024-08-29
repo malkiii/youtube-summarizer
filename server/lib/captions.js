@@ -66,10 +66,18 @@ export async function getVideoTranscript(videoId, lang = 'en', retries = 0) {
  * @returns {Promise<string>}
  */
 async function fetchHTML(url) {
-  try {
-    const response = await axios.get('https://api.webscrapingapi.com/v2', {
-      params: { url, api_key: process.env.WEB_SCRAPING_API_KEY },
+  const scrape = key => {
+    if (!key) throw new Error('API_KEY_MISSING');
+
+    return axios.get('https://api.webscrapingapi.com/v2', {
+      params: { url, api_key: key },
     });
+  };
+
+  try {
+    const response = await scrape(process.env.WEB_SCRAPING_API_KEY)
+      .catch(() => scrape(process.env.WEB_SCRAPING_API_KEY_2))
+      .catch(() => scrape(process.env.WEB_SCRAPING_API_KEY_3));
 
     return response.data;
   } catch (error) {
