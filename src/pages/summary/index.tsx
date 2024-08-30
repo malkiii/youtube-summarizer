@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, type Variants } from 'framer-motion';
@@ -17,7 +17,7 @@ export default function Page() {
 
   const { content, isLoading, error } = useSummary(params.id!, i18n.language);
 
-  const errorMessage = useMemo(() => {
+  const errorMessage = React.useMemo(() => {
     if (!error) return;
 
     switch (error) {
@@ -39,10 +39,10 @@ export default function Page() {
   return (
     <div className="relative mx-auto min-h-dvh max-w-2xl px-4 py-5">
       {isLoading ? (
-        <>
+        <div className="placeholder">
           <Skeleton />
           <Skeleton />
-        </>
+        </div>
       ) : errorMessage ? (
         <div className="absolute inset-0 content-center">
           <div className="mx-auto flex w-fit -translate-y-full items-center justify-center gap-2 text-balance text-muted-foreground max-sm:flex-col max-sm:text-center">
@@ -82,6 +82,8 @@ function useSummary(videoId: string, lang = 'en') {
   const [content, setContent] = React.useState<string>();
   const [isLoading, setIsLoading] = React.useState(true);
   const [error, setError] = React.useState<string>();
+
+  useBeforeUnload(isLoading);
 
   React.useEffect(() => {
     if (!videoId || content) return;
@@ -142,6 +144,19 @@ function CopyButton(props: { link: string; content: string | undefined }) {
       <ClipboardIcon className="size-4" />
     </Button>
   );
+}
+
+function useBeforeUnload(value: boolean | null) {
+  React.useEffect(() => {
+    window.onbeforeunload = value
+      ? event => {
+          event.preventDefault();
+          event.returnValue = true;
+
+          return true;
+        }
+      : null;
+  }, [value]);
 }
 
 function Skeleton() {

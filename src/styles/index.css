@@ -83,6 +83,10 @@
     @apply bg-foreground text-background;
   }
 
+  html:has(.placeholder) a[href^='/'] {
+    pointer-events: none;
+  }
+
   @media screen {
     article {
       @apply dark:prose-invert;
