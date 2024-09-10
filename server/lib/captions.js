@@ -15,14 +15,20 @@ export async function getVideoTranscript(videoId, lang = 'en', retries = 0) {
     // Fetch the video page HTML
     const html = await fetchHTML(`https://www.youtube.com/watch?v=${videoId}`);
 
+    console.log(html);
+
     // Extract the JSON data from the HTML
     const ytInitialPlayerResponseMatch = html.match(/ytInitialPlayerResponse\s*=\s*(\{.*?\});/);
     if (!ytInitialPlayerResponseMatch) throw new Error('UNREACHABLE');
 
+    console.log(ytInitialPlayerResponseMatch);
+
     const playerResponse = JSON.parse(ytInitialPlayerResponseMatch[1]);
 
+    console.log(playerResponse);
+
     // Check if the video is playable or exists
-    if (playerResponse.playabilityStatus.status !== 'OK') throw new Error('UNREACHABLE');
+    if (playerResponse.playabilityStatus?.status !== 'OK') throw new Error('UNREACHABLE');
 
     // Get caption tracks from the JSON data
     const captionTracks = playerResponse.captions?.playerCaptionsTracklistRenderer?.captionTracks;
