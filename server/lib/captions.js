@@ -1,7 +1,5 @@
 import axios from 'axios';
 import ytdl from '@distube/ytdl-core';
-import cookies from './cookies.json' with { type: 'json' };
-
 import xml2js from 'xml2js';
 import he from 'he';
 
@@ -24,7 +22,7 @@ export async function getVideoTranscript(videoId, lang = 'en', retries = 0) {
     // const playerResponse = JSON.parse(ytInitialPlayerResponseMatch[1]);
 
     const info = await ytdl.getInfo(videoId, {
-      agent: ytdl.createAgent(cookies, { pipelining: 5 }),
+      agent: ytdl.createAgent(JSON.parse(process.env.YOUTUBE_COOKIE), { pipelining: 5 }),
       requestOptions: {
         headers: {
           'User-Agent':
