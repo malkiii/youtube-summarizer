@@ -83,7 +83,7 @@ async function fetchHTML(url) {
     // return response.data;
 
     // Launch a new browser instance
-    const browser = await launch({
+    const browser = await puppeteer.launch({
       headless: true,
       defaultViewport: null,
       executablePath: '/usr/bin/google-chrome',
