@@ -4,7 +4,6 @@ import express from 'express';
 import fs from 'node:fs/promises';
 import { getAbsolutePath, minifyHTML } from './lib/utils.js';
 import cookieParser from 'cookie-parser';
-// import cors from 'cors';
 
 import * as routers from './routers.js';
 

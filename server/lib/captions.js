@@ -1,4 +1,7 @@
 import axios from 'axios';
+import ytdl from '@distube/ytdl-core';
+import cookies from './cookies.json' with { type: 'json' };
+
 import xml2js from 'xml2js';
 import he from 'he';
 
@@ -11,17 +14,31 @@ export async function getVideoTranscript(videoId, lang = 'en', retries = 0) {
   if (retries > 2) throw new Error('BAD_REQUEST');
 
   try {
-    // Fetch the video page HTML
-    const html = await fetchHTML(`https://www.youtube.com/watch?v=${videoId}`);
+    // // Fetch the video page HTML
+    // const html = await fetchHTML(`https://www.youtube.com/watch?v=${videoId}`);
 
-    // Extract the JSON data from the HTML
-    const ytInitialPlayerResponseMatch = html.match(/ytInitialPlayerResponse\s*=\s*(\{.*?\});/);
-    if (!ytInitialPlayerResponseMatch) throw new Error('UNREACHABLE');
+    // // Extract the JSON data from the HTML
+    // const ytInitialPlayerResponseMatch = html.match(/ytInitialPlayerResponse\s*=\s*(\{.*?\});/);
+    // if (!ytInitialPlayerResponseMatch) throw new Error('UNREACHABLE');
 
-    const playerResponse = JSON.parse(ytInitialPlayerResponseMatch[1]);
+    // const playerResponse = JSON.parse(ytInitialPlayerResponseMatch[1]);
+
+    const info = await ytdl.getInfo(videoId, {
+      agent: ytdl.createAgent(cookies, { pipelining: 5 }),
+      requestOptions: {
+        headers: {
+          'User-Agent':
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36',
+          'Accept-Language': 'en-US,en;q=0.9',
+          'Referer': 'https://www.youtube.com/',
+        },
+      },
+    });
+
+    const playerResponse = info?.player_response;
 
     // Check if the video is playable or exists
-    if (playerResponse.playabilityStatus?.status !== 'OK') throw new Error('UNREACHABLE');
+    if (playerResponse.playabilityStatus.status !== 'OK') throw new Error('UNREACHABLE');
 
     // Get caption tracks from the JSON data
     const captionTracks = playerResponse.captions?.playerCaptionsTracklistRenderer?.captionTracks;
