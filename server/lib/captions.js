@@ -91,8 +91,15 @@ async function fetchHTML(url) {
     // Launch a new browser instance
     const browser = await puppeteer.launch({
       headless: true,
+      defaultViewport: null,
       executablePath: '/usr/bin/google-chrome',
-      args: ['--no-sandbox'],
+      args: [
+        '--no-sandbox',
+        '--disable-gpu',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-accelerated-2d-canvas',
+      ],
     });
 
     // Navigate to the provided URL
