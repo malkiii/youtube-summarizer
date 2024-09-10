@@ -10,7 +10,7 @@ import * as routers from './routers.js';
 
 // Website info
 const info = {
-  title: 'YouTube Summerizer',
+  title: 'YouTube Summarizer',
   description:
     'Save time and get straight to the point with our AI-powered tool, designed to extract the most important information from any YouTube video.',
   og: '/og.jpg',
