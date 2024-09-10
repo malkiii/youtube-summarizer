@@ -91,13 +91,13 @@ async function fetchHTML(url) {
     // Launch a new browser instance
     const browser = await puppeteer.launch({
       headless: true,
-      defaultViewport: null,
       executablePath: '/usr/bin/google-chrome',
       args: ['--no-sandbox'],
     });
 
     // Navigate to the provided URL
     const page = await browser.newPage();
+    await page.setJavaScriptEnabled(true);
     await page.goto(url);
 
     // Get the page content (HTML)
