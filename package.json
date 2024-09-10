@@ -13,7 +13,6 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@distube/ytdl-core": "^4.14.4",
     "@excalidraw/markdown-to-text": "^0.1.2",
     "@google/generative-ai": "^0.17.0",
     "@radix-ui/react-select": "^2.1.1",
@@ -30,6 +29,7 @@
     "i18next": "^23.13.0",
     "lucide-react": "^0.427.0",
     "node-cache": "^5.1.2",
+    "puppeteer": "^23.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^15.0.1",

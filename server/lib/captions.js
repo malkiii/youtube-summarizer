@@ -1,5 +1,5 @@
 import axios from 'axios';
-import ytdl from '@distube/ytdl-core';
+import puppeteer from 'puppeteer';
 import xml2js from 'xml2js';
 import he from 'he';
 
@@ -12,28 +12,14 @@ export async function getVideoTranscript(videoId, lang = 'en', retries = 0) {
   if (retries > 2) throw new Error('BAD_REQUEST');
 
   try {
-    // // Fetch the video page HTML
-    // const html = await fetchHTML(`https://www.youtube.com/watch?v=${videoId}`);
+    // Fetch the video page HTML
+    const html = await fetchHTML(`https://www.youtube.com/watch?v=${videoId}`);
 
-    // // Extract the JSON data from the HTML
-    // const ytInitialPlayerResponseMatch = html.match(/ytInitialPlayerResponse\s*=\s*(\{.*?\});/);
-    // if (!ytInitialPlayerResponseMatch) throw new Error('UNREACHABLE');
+    // Extract the JSON data from the HTML
+    const ytInitialPlayerResponseMatch = html.match(/ytInitialPlayerResponse\s*=\s*(\{.*?\});/);
+    if (!ytInitialPlayerResponseMatch) throw new Error('UNREACHABLE');
 
-    // const playerResponse = JSON.parse(ytInitialPlayerResponseMatch[1]);
-
-    const info = await ytdl.getInfo(videoId, {
-      agent: ytdl.createAgent(JSON.parse(process.env.YOUTUBE_COOKIE), { pipelining: 5 }),
-      requestOptions: {
-        headers: {
-          'User-Agent':
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36',
-          'Accept-Language': 'en-US,en;q=0.9',
-          'Referer': 'https://www.youtube.com/',
-        },
-      },
-    });
-
-    const playerResponse = info?.player_response;
+    const playerResponse = JSON.parse(ytInitialPlayerResponseMatch[1]);
 
     // Check if the video is playable or exists
     if (playerResponse.playabilityStatus.status !== 'OK') throw new Error('UNREACHABLE');
@@ -81,20 +67,39 @@ export async function getVideoTranscript(videoId, lang = 'en', retries = 0) {
  * @returns {Promise<string>}
  */
 async function fetchHTML(url) {
-  const scrape = key => {
-    if (!key) throw new Error('API_KEY_MISSING');
+  // const scrape = key => {
+  //   if (!key) throw new Error('API_KEY_MISSING');
 
-    return axios.get('https://api.webscrapingapi.com/v2', {
-      params: { url, api_key: key },
-    });
-  };
+  //   return axios.get('https://api.webscrapingapi.com/v2', {
+  //     params: { url, api_key: key },
+  //   });
+  // };
 
   try {
-    const response = await scrape(process.env.WEB_SCRAPING_API_KEY)
-      .catch(() => scrape(process.env.WEB_SCRAPING_API_KEY_2))
-      .catch(() => scrape(process.env.WEB_SCRAPING_API_KEY_3));
+    // const response = await scrape(process.env.WEB_SCRAPING_API_KEY)
+    //   .catch(() => scrape(process.env.WEB_SCRAPING_API_KEY_2))
+    //   .catch(() => scrape(process.env.WEB_SCRAPING_API_KEY_3));
 
-    return response.data;
+    // return response.data;
+
+    // Launch a new browser instance
+    const browser = await launch({
+      headless: true,
+      defaultViewport: null,
+      executablePath: '/usr/bin/google-chrome',
+      args: ['--no-sandbox'],
+    });
+
+    // Navigate to the provided URL
+    const page = await browser.newPage();
+    await page.goto(url);
+
+    // Get the page content (HTML)
+    const html = await page.content();
+
+    await browser.close();
+
+    return html;
   } catch (error) {
     console.error(error);
     throw new Error('GENERATION_FAILED');
