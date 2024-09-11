@@ -7,13 +7,24 @@ import z from 'zod';
  */
 export async function getVideoTranscript(videoId) {
   try {
-    const subtitles = await getSubtitles(videoId, process.env.RAPIDAPI_KEY)
-      .catch(() => getSubtitles(videoId, process.env.RAPIDAPI_KEY_2))
-      .catch(() => getSubtitles(videoId, process.env.RAPIDAPI_KEY_3))
+    const data = await getSubtitlesData(videoId, process.env.RAPIDAPI_KEY)
+      .catch(() => getSubtitlesData(videoId, process.env.RAPIDAPI_KEY_2))
+      .catch(() => getSubtitlesData(videoId, process.env.RAPIDAPI_KEY_3))
       .catch(error => {
         console.error(error);
         throw new Error('GENERATION_FAILED');
       });
+
+    const subtitles = z
+      .array(
+        z.object({
+          id: z.number(),
+          start: z.number(),
+          duration: z.number(),
+          text: z.string(),
+        }),
+      )
+      .parse(data);
 
     if (subtitles.length === 0) throw new Error('NO_CAPTIONS');
 
@@ -33,7 +44,7 @@ export async function getVideoTranscript(videoId) {
  * @param {string} videoId
  * @param {string | undefined} key
  */
-async function getSubtitles(videoId, key) {
+async function getSubtitlesData(videoId, key) {
   if (!key) throw new Error('API_KEY_MISSING');
 
   const response = await axios.get('https://youtube-v2.p.rapidapi.com/video/subtitles', {
@@ -44,16 +55,5 @@ async function getSubtitles(videoId, key) {
     },
   });
 
-  const subtitles = z
-    .array(
-      z.object({
-        id: z.number(),
-        start: z.number(),
-        duration: z.number(),
-        text: z.string(),
-      }),
-    )
-    .parse(response.data.subtitles);
-
-  return subtitles;
+  return response.data.subtitles;
 }
