@@ -3,7 +3,7 @@
 ## Powered By
 
 - [Render](https://render.com/) &horbar; a cloud platform for building and shipping web applications.
-- [WebScrapingAPI ](https://www.webscrapingapi.com/) &horbar; a proxy API for web scraping.
+- [Youtube V2](https://rapidapi.com/omarmhaimdat/api/youtube-v2) &horbar; a proxy API for extracting youtube data.
 - [Gemini API](https://ai.google.dev/gemini-api) &horbar; the Gemini 1.5 Flash API provided by Google.
 
 ## Running Locally
