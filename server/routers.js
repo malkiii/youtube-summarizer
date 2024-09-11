@@ -1,5 +1,5 @@
 import { getVideoTranscript } from './lib/captions.js';
-import { generateContent, getSummerizeInstruction } from './lib/gemini.js';
+import { generateContent, getSummarizePrompt } from './lib/gemini.js';
 import Cache from 'node-cache';
 import { z } from 'zod';
 
@@ -33,8 +33,8 @@ export async function summerizeYoutubeVideo(req, res) {
     const cachedData = getCachedData(videoId, lang);
     if (cachedData) return res.status(cachedData.status).end(cachedData.data);
 
-    const transcript = await getVideoTranscript(videoId, lang);
-    const summary = await generateContent(getSummerizeInstruction(languages[lang], transcript));
+    const transcript = await getVideoTranscript(videoId);
+    const summary = await generateContent(getSummarizePrompt(languages[lang], transcript));
 
     // Cache the data for 12 minutes
     cache.set(`${lang}/${videoId}`, summary, 12 * 60);

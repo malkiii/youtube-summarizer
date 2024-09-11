@@ -25,6 +25,6 @@ export async function generateContent(prompt) {
  * @param {string} transcript
  * @returns {string}
  */
-export const getSummerizeInstruction = (lang, transcript) => `\
+export const getSummarizePrompt = (lang, transcript) => `\
 Write a summary in markdown format in "${lang}" using only the information provided in this video transcript:
 "${transcript.replace(/"/g, "'")}"`;
