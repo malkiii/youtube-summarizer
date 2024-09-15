@@ -14,7 +14,7 @@
    pnpm install
    ```
 
-2. create `.env` file that has all the required vars in [env.ts](https://github.com/malkiii/youtube-summerizer/blob/main/env.ts#L5) file.
+2. create `.env` file that has all the required vars in [env.ts](./env.ts#L5) file.
 
 3. start the development server on [localhost:5173](http://localhost:5173):
 
@@ -30,4 +30,4 @@
 
 # License
 
-Distributed under the [MIT](https://github.com/malkiii/youtube-summerizer/blob/main/LICENSE) license.
+Distributed under the [MIT](./LICENSE) license.
