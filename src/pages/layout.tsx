@@ -74,7 +74,7 @@ function Footer() {
         </a>
         .<br className="sm:hidden" /> The source code is available on{' '}
         <a
-          href="https://github.com/malkiii/youtube-summerizer"
+          href="https://github.com/malkiii/youtube-summarizer"
           target="_blank"
           className="underline underline-offset-4"
         >
