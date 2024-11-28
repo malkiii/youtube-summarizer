@@ -54,7 +54,7 @@ export default function Page() {
         </div>
       ) : (
         <>
-          <div className="flex items-center justify-between animate-in fade-in-0 print:hidden">
+          <div className="mb-8 flex items-center justify-between animate-in fade-in-0 print:hidden">
             <Button className="gap-2" asChild>
               <Link to={`/${i18n.language}`}>
                 <ArrowLeftIcon className="size-5 rtl:-scale-100" /> {t('summary.back')}
